@@ -1,11 +1,14 @@
-import Link from 'next/link'
+import Link from "next/link";
+import withLayout from "../components/layout";
 
-export default () => (
+const Page = () => (
   <div>
-    This is a static page goto{' '}
+    This is a static page goto{" "}
     <Link href="/">
       <a>dynamic</a>
-    </Link>{' '}
+    </Link>
     page.
   </div>
-)
+);
+
+export default withLayout(Page);

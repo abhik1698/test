@@ -1,8 +1,9 @@
-import { withApollo } from '../apollo/client'
-import gql from 'graphql-tag'
-import Link from 'next/link'
-import { useQuery } from '@apollo/react-hooks'
-import { useRouter } from 'next/router'
+import { withApollo } from "../apollo/client";
+import gql from "graphql-tag";
+import Link from "next/link";
+import { useQuery } from "@apollo/react-hooks";
+import { useRouter } from "next/router";
+import withLayout from "../components/layout";
 
 const ViewerQuery = gql`
   query ViewerQuery {
@@ -11,36 +12,46 @@ const ViewerQuery = gql`
       email
     }
   }
-`
+`;
 
-const Index = () => {
-  const router = useRouter()
-  const { data, loading } = useQuery(ViewerQuery)
+// const Index = () => {
+//   const router = useRouter();
+//   var { data, loading } = useQuery(ViewerQuery);
+// };
 
-  if (
-    loading === false &&
-    data.viewer === null &&
-    typeof window !== 'undefined'
-  ) {
-    router.push('/signin')
-  }
+const QuestionLink = (props) => (
+  <li>
+    <Link href={`/question?title=${props.title}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+);
 
-  if (data && data.viewer) {
-    return (
+const Page = () => {
+  return (
+    <div>
       <div>
-        You're signed in as {data.viewer.email} goto{' '}
-        <Link href="/about">
-          <a>static</a>
-        </Link>{' '}
-        page. or{' '}
-        <Link href="/signout">
-          <a>signout</a>
-        </Link>
+        <h1>Recent Questions</h1>
+        <ul>
+          <QuestionLink title="Hello Next.js" />
+          <QuestionLink title="Learn Next.js is awesome" />
+          <QuestionLink title="Deploy apps with Zeit" />
+        </ul>
       </div>
-    )
-  }
+    </div>
+  );
+};
 
-  return <p>Loading...</p>
-}
+export default withApollo(withLayout(Page));
 
-export default withApollo(Index)
+// if (
+//   loading === false &&
+//   data.viewer === null &&
+//   typeof window !== "undefined"
+// ) {
+//   router.push("/signin");
+// }
+
+// if (!data && !data.viewer) {  }
+
+// return <p>Loading...</p>;  `
