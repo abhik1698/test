@@ -21,7 +21,7 @@ const ViewerQuery = gql`
 
 const QuestionLink = (props) => (
   <li>
-    <Link href={`/question?title=${props.title}`}>
+    <Link href="/q/[id]" as={`/q/${props.id}`}>
       <a>{props.title}</a>
     </Link>
   </li>
@@ -30,14 +30,18 @@ const QuestionLink = (props) => (
 const Page = () => {
   return (
     <div>
-      <div>
-        <h1>Recent Questions</h1>
-        <ul>
-          <QuestionLink title="Hello Next.js" />
-          <QuestionLink title="Learn Next.js is awesome" />
-          <QuestionLink title="Deploy apps with Zeit" />
-        </ul>
-      </div>
+      <h1>Recent Questions</h1>
+      <ul>
+        <QuestionLink id="Hello Next.js" title="Hello Next.js" />
+        <QuestionLink
+          id="Learn Next.js is awesome"
+          title="Learn Next.js is awesome"
+        />
+        <QuestionLink
+          id="Deploy apps with Zeit"
+          title="Deploy apps with Zeit"
+        />
+      </ul>
     </div>
   );
 };
