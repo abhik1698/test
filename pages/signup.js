@@ -7,7 +7,7 @@ import Field from "../components/field";
 import { getErrorMessage } from "../lib/form";
 import { useRouter } from "next/router";
 
-import withLayout from "../components/layout";
+import Layout from "../components/layout";
 
 const SignUpMutation = gql`
   mutation SignUpMutation($email: String!, $password: String!) {
@@ -45,7 +45,7 @@ function SignUp() {
   }
 
   return (
-    <div>
+    <Layout>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         {errorMsg && <p>{errorMsg}</p>}
@@ -68,8 +68,8 @@ function SignUp() {
           <a>Sign in</a>
         </Link>
       </form>
-    </div>
+    </Layout>
   );
 }
 
-export default withApollo(withLayout(SignUp));
+export default withApollo(SignUp);

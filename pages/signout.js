@@ -3,7 +3,7 @@ import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { useRouter } from "next/router";
 import { withApollo } from "../apollo/client";
-import withLayout from "../components/layout";
+import Layout from "../components/layout";
 
 const SignOutMutation = gql`
   mutation SignOutMutation {
@@ -24,7 +24,7 @@ function SignOut() {
     });
   }, [signOut, router, client]);
 
-  return <div>Signing out...</div>;
+  return <Layout>Signing out...</Layout>;
 }
 
-export default withApollo(withLayout(SignOut));
+export default withApollo(SignOut);

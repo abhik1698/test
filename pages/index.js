@@ -3,9 +3,8 @@ import gql from "graphql-tag";
 import Link from "next/link";
 import { useQuery } from "@apollo/react-hooks";
 import { useRouter } from "next/router";
-import withLayout from "../components/layout";
 import fetch from "isomorphic-unfetch";
-import { useEffect, useState } from "react";
+import Layout from "../components/layout";
 
 const ViewerQuery = gql`
   query ViewerQuery {
@@ -16,11 +15,6 @@ const ViewerQuery = gql`
   }
 `;
 
-// const Index = () => {
-//   const router = useRouter();
-//   var { data, loading } = useQuery(ViewerQuery);
-// };
-
 const QuestionLink = (props) => (
   <li>
     <Link href="/q/[id]" as={`/q/${props.id}`}>
@@ -30,50 +24,64 @@ const QuestionLink = (props) => (
 );
 
 const Index = (props) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  console.log(props.shows);
-  // async function fetchData() {
-  //   const res = await fetch("https://api.tvmaze.com/search/shows?q=batman");
-  //   res
-  //     .json()
-  //     .then((res) => {
-  //       setData(res);
-  //       data && setLoading(false);
-  //       console.log(data);
-  //     })
-  //     .catch((err) => setErrors(err));
-  // }
-  // useEffect(() => {
-  //   fetchData();
-  // });
-  // setData({ shows: resData.map((entry) => entry.show) });
-
   return (
-    <div>
+    <Layout>
       <h1>Recent Questions</h1>
       <ul>
-        {/* {!loading &&
-          data.shows.map((show) => (
-            <li key={show.id}>
-              <Link href="/p/[id]" as={`/p/${show.id}`}>
-                <a>{show.name}</a>
-              </Link>
-            </li>
-          ))} */}
+        {props.shows.map((show) => (
+          <li key={show.id}>
+            <Link href="/q/[id]" as={`/q/${show.id}`}>
+              <a>{show.name}</a>
+            </Link>
+          </li>
+        ))}
       </ul>
-    </div>
+      <style jsx>{`
+        h1,
+        a {
+          font-family: "Arial";
+        }
+
+        ul {
+          padding: 0;
+        }
+
+        li {
+          list-style: none;
+          margin: 5px 0;
+        }
+
+        a {
+          text-decoration: none;
+          color: blue;
+        }
+
+        a:hover {
+          opacity: 0.6;
+        }
+      `}</style>
+    </Layout>
   );
 };
 
-Index.getInitialProps = async (ctx) => {
-  const res = await fetch("http://api.tvmaze.com/search/shows?q=batman");
-  const json = await res.json();
-  console.log(json);
-  return { shows: json.map((j) => j.show) };
+Index.getInitialProps = async function () {
+  const res = await fetch("https://api.tvmaze.com/search/shows?q=batman");
+  const data = await res.json();
+
+  console.log(`Show data fetched. Count: ${data.length}`);
+
+  return {
+    shows: data.map((entry) => entry.show),
+  };
 };
 
-export default withApollo(withLayout(Index));
+export default withApollo(Index);
+
+//AUTH
+// const Index = () => {
+//   const router = useRouter();
+//   var { data, loading } = useQuery(ViewerQuery);
+// };
 
 // if (
 //   loading === false &&

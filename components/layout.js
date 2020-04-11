@@ -7,8 +7,8 @@ const layoutStyle = {
   border: "5px solid tomato",
 };
 
-const withLayout = (Page) => {
-  return () => (
+const Layout = (props) => {
+  return (
     <div style={layoutStyle}>
       <Head>
         <title>StackOverflow</title>
@@ -16,16 +16,16 @@ const withLayout = (Page) => {
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         />
       </Head>
       <Navbar />
       <center>
         <h1>StackOverflow Clone</h1>
       </center>
-      <Page />
+      <div>{props.children}</div>
     </div>
   );
 };
 
-export default withLayout;
+export default Layout;
