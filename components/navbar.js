@@ -11,7 +11,7 @@ export default function Navbar() {
       <ul>
         <li>
           <Link href="/">
-            <b title="Home">StackOverflow</b>
+            <b title="Home">{process.env.name}</b>
           </Link>
         </li>
         <li>
@@ -30,7 +30,6 @@ export default function Navbar() {
           </Link>
         </li>
       </ul>
-
       <style jsx>{`
         ul {
           list-style: none;

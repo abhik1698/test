@@ -6,6 +6,12 @@ import { useRouter } from "next/router";
 import fetch from "isomorphic-unfetch";
 import Layout from "../components/layout";
 
+import useSWR from "swr";
+
+function fetcher(url) {
+  return fetch(url).then((r) => r.json());
+}
+
 const ViewerQuery = gql`
   query ViewerQuery {
     viewer {
@@ -15,15 +21,10 @@ const ViewerQuery = gql`
   }
 `;
 
-const QuestionLink = (props) => (
-  <li>
-    <Link href="/q/[id]" as={`/q/${props.id}`}>
-      <a>{props.title}</a>
-    </Link>
-  </li>
-);
-
 const Index = (props) => {
+  const { data, error } = useSWR("/api/randomQuote", fetcher);
+  const author = data?.author;
+
   return (
     <Layout>
       <h1>Recent Questions</h1>

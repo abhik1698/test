@@ -11,7 +11,7 @@ const Layout = (props) => {
   return (
     <div style={layoutStyle}>
       <Head>
-        <title>StackOverflow</title>
+        <title>{process.env.name}</title>
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -21,7 +21,7 @@ const Layout = (props) => {
       </Head>
       <Navbar />
       <center>
-        <h1>StackOverflow Clone</h1>
+        <h1>{process.env.name}</h1>
       </center>
       <div>{props.children}</div>
     </div>
